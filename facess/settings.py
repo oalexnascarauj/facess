@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     "rest_framework",
     # "corsheaders",  # habilitar se necessário para dispositivos externos
     # "channels",     # preparado para uso futuro
+    # Local apps
+    "usuarios",
 ]
 
 MIDDLEWARE = [
@@ -62,17 +64,26 @@ TEMPLATES = [
 WSGI_APPLICATION = "facess.wsgi.application"
 # ASGI_APPLICATION = "facess.asgi.application"  # quando habilitar Channels/WebSockets
 
-# Database - PostgreSQL
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_DB", default="facess"),
-        "USER": env("POSTGRES_USER", default="facess"),
-        "PASSWORD": env("POSTGRES_PASSWORD", default="facess"),
-        "HOST": env("POSTGRES_HOST", default="localhost"),
-        "PORT": env("POSTGRES_PORT", default="5432"),
+# Database - PostgreSQL (padrão) com fallback opcional para SQLite em desenvolvimento
+USE_SQLITE = env.bool("USE_SQLITE", default=False)
+if USE_SQLITE:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env("POSTGRES_DB", default="facess"),
+            "USER": env("POSTGRES_USER", default="facess"),
+            "PASSWORD": env("POSTGRES_PASSWORD", default="facess"),
+            "HOST": env("POSTGRES_HOST", default="localhost"),
+            "PORT": env("POSTGRES_PORT", default="5432"),
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -121,3 +132,6 @@ REST_FRAMEWORK = {
 # Tailwind/Bootstrap: os assets serão servidos via templates e static/
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Custom user model
+AUTH_USER_MODEL = "usuarios.CustomUser"

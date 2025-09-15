@@ -14,6 +14,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
     path("api-auth/", include("rest_framework.urls")),
+    path("api/", include("usuarios.urls")),
 ]
 
 if settings.DEBUG:
