@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # "channels",     # preparado para uso futuro
     # Local apps
     "usuarios",
+    "academico",
 ]
 
 MIDDLEWARE = [

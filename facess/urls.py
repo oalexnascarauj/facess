@@ -15,6 +15,7 @@ urlpatterns = [
     path("", home, name="home"),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include("usuarios.urls")),
+    path("api/", include("academico.urls")),
 ]
 
 if settings.DEBUG:
