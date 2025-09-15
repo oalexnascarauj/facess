@@ -16,6 +16,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include("usuarios.urls")),
     path("api/", include("academico.urls")),
+    path("api/", include("biometria.urls")),
 ]
 
 if settings.DEBUG:
